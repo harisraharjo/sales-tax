@@ -2,7 +2,13 @@ from .shared import BaseClass
 import math
 
 
-# To create a generic rule such as changing denomination (rounding by) value
+'''
+To create a generic rule.
+This way it's possible if we want to change the rounding_by value.
+we can even also add more things that can manage the entries or tax calculations
+'''
+
+
 class Rule(BaseClass):
     """docstring for Rule."""
 

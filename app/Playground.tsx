@@ -58,6 +58,7 @@ let outputDisplay: OutputDisplayText[] = []
 
 type Props = PropsWithChildren<{ comboBoxData: EntriesProps }>
 export const Playground = ({ comboBoxData }: Props) => {
+  // To add input data. this is from Next JS. We can't change it's location
   async function add(formData: FormData) {
     "use server"
 
@@ -71,6 +72,7 @@ export const Playground = ({ comboBoxData }: Props) => {
       value: "",
     }
 
+    // Creating a display for the input data. This should be moved to a separate function
     for (let [key, value] of formDataEntries) {
       value = value.toString()
       let [v, label = ""] = value.split(VALUE_SEPARATOR)
@@ -104,6 +106,7 @@ export const Playground = ({ comboBoxData }: Props) => {
     revalidatePath("/")
   }
 
+  // To submit data. this is from Next JS. We can't change it's location
   async function submit(formData: FormData) {
     "use server"
 

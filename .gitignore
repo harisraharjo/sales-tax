@@ -36,10 +36,8 @@ next-env.d.ts
 
 
 
-
-
 # Byte-compiled / optimized / DLL files
-api/__pycache__
+__pycache__
 api/*.py[cod]
 api/*$py.class
 

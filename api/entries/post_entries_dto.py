@@ -3,6 +3,12 @@ from typing import List
 from typing import Union
 
 
+'''
+This class is designed to establish contract between client and the API endpoint.
+With this, we can make the endpoint easy to change and also more safe.
+'''
+
+
 @dataclass(frozen=True, order=True)
 class PostEntriesInputDTO:
     """docstring for PostEntriesInputDTO."""

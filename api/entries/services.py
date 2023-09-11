@@ -2,6 +2,11 @@ from .post_entries_dto import PostEntriesInputDTO
 from typing import List
 from ..model import TaxManager, RuleManager, EntryManager
 
+'''
+This class is designed to contain all the business logic in the entry domain.
+With this, we can encapsulate the business logic.
+'''
+
 
 class EntriesService:
     """docstring for Taxes."""
@@ -36,38 +41,27 @@ class EntriesService:
         rule = RuleManager(self.db).get(rule_id)
 
         for (quantity, price, kind_id, other_tax_id) in _zip:
-            # print("\n->: ", quantity, price, kind_id, other_tax_id)
-            # because right now there is only one type of other tax which is import
 
             sales_tax = 0
             if not base_tax.is_whitelisted(kind_id):
-                # print("Calculate basic tax...")
                 sales_tax += base_tax.calculate(quantity, price)
 
+            # because right now there is only one type of other tax which is import
             if other_tax_id:
-                # print("Calculate import tax...")
                 sales_tax += tax_man.get(
                     other_tax_id).calculate(quantity, price)
 
             sales_tax = rule.round_to_nearest_float(sales_tax)
-            print("Tax:", round(sales_tax, 2))
 
             price += sales_tax
-            print("Price:", round(price, 2))
 
             total_price += price
             total_tax += sales_tax
 
             prices.append(round(price, 2))
 
-        tup = total_tax, total_price
-
-        print("priceys: ", prices)
-        print("final tax: ", round(tup[0], 2))
-        print("final price: ", round(tup[1], 2))
-
         return {
             "prices": prices,
-            "total_tax": total_tax,
-            "total_price": total_price
+            "total_tax": round(total_tax, 2),
+            "total_price": round(total_price, 2)
         }

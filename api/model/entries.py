@@ -2,20 +2,42 @@
 from typing import Union, List
 
 
-# The design of this class is to have
+'''
+This class is designed to acept any input from the user.
+This class's job is to point to other class. 
+With this, we can have flexible behaviours such as get all entries that uses X rule.
+'''
+
+
 class Entry:
-    def __init__(self, id: int, rounding_by: float = 0.05):
+    def __init__(self, id: int, total_tax: float,
+                 total_price: float,
+                 tax_id: int,
+                 product_id: int,  rule_id: int):
         self.id = id
-        self.rounding_by = rounding_by
-        self.total_tax: Union[float, None] = None
-        self.total_price: Union[float, None] = None
-        self.tax_id: Union[int, None] = None
-        self.product_id: Union[int, None] = None
+        self.total_tax = total_tax
+        self.total_price = total_price
+        self.tax_id = tax_id
+        self.product_id = product_id
+        self.rule_id: rule_id
+
+
+'''
+This class cannot be created from initialization.-
+because an entry data can only be created from the POST entries endpoint. 
+We need to calculate the data first before storing the value.
+'''
 
 
 class Entries:
-    def __init__(self, ):
+    def __init__(self):
         self._data: Union[Entry, None] = None
+
+    def add(self, total_tax: float,
+            total_price: float,
+            tax_id: int,
+            product_id: int,  rule_id: int):
+        pass
 
 
 class EntryManager:
