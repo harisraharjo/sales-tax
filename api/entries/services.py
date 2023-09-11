@@ -24,8 +24,6 @@ class EntriesService:
 
         return input_props
 
-        # list({ele for ele in test_dict if test_dict[ele]})
-        # data["taxes"] = {k: data["taxes"] for k in keys}
         # return Mapper(GetEntriesDTO).to_dto(**data)
 
     def calculate(self, data: PostEntriesInputDTO, rule_id: int):

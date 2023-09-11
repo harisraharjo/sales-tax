@@ -137,11 +137,20 @@ export const Playground = ({ comboBoxData }: Props) => {
     let response = await postJSON("http://127.0.0.1:3000/api/entries", payload)
 
     let data = await response.json()
+
     outputDisplay = displayOutput(
       inputDisplay.map((v) => v.label),
       data,
     ) as OutputDisplayText[]
 
+    revalidatePath("/")
+  }
+
+  async function reset() {
+    "use server"
+
+    inputDisplay.length = 0
+    outputDisplay.length = 0
     revalidatePath("/")
   }
 
@@ -190,46 +199,51 @@ export const Playground = ({ comboBoxData }: Props) => {
         />
         <Button>Add</Button>
       </form>
-      <form className="w-full" action={submit}>
-        <Button type="submit">
-          <SendHorizonal />
-        </Button>
-        {Boolean(inputDisplay.length) && (
-          <>
-            <h2>{INPUT_TITLE}</h2>
-            {inputDisplay.map((v, i) => (
-              <>
-                <input
-                  type="hidden"
-                  name={`data${i}`}
-                  value={v.value}
-                  required
-                />
-                <Input value={v.label} key={i} disabled />
-              </>
-            ))}
-          </>
-        )}
-        {Boolean(outputDisplay.length) && (
-          <>
-            <br />
-            <br />
-            <Separator />
-            <br />
-            <h2>{OUTPUT_TITLE}</h2>
-            {outputDisplay?.map((text, i) => (
-              <Input value={text} key={i} disabled />
-            ))}
-          </>
-        )}
-      </form>
+      <div className="flex w-full gap-3">
+        <form action={submit} className="w-full">
+          <Button type="submit">
+            <SendHorizonal />
+          </Button>
+          {Boolean(inputDisplay.length) && (
+            <>
+              <h2>{INPUT_TITLE}</h2>
+              {inputDisplay.map((v, i) => (
+                <>
+                  <input
+                    type="hidden"
+                    name={`data${i}`}
+                    value={v.value}
+                    required
+                  />
+                  <Input value={v.label} key={i} disabled />
+                </>
+              ))}
+            </>
+          )}
+        </form>
+        <form action={reset}>
+          <Button variant={"destructive"}>Clear</Button>
+        </form>
+      </div>
+      {Boolean(outputDisplay.length) && (
+        <div className="w-full">
+          <br />
+          <br />
+          <Separator />
+          <br />
+          <h2>{OUTPUT_TITLE}</h2>
+          {outputDisplay?.map((text, i) => (
+            <Input value={text} key={i} disabled />
+          ))}
+        </div>
+      )}
     </>
   )
 }
 
 function displayOutput(listOfString: InputDisplayText[], data: EntriesOutput) {
   const result = listOfString.map((text, i) => {
-    let result = text.split(INPUT_SEPARATOR)[0].trimEnd()
+    let result = text.split(` ${INPUT_SEPARATOR}`)[0].trimEnd()
 
     return `${result}${OUTPUT_SEPARATOR}${SPACE}${data.prices[i]}`
   })

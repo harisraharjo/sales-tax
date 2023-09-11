@@ -2,7 +2,11 @@ import Link from "next/link"
 import { Playground } from "./Playground"
 
 async function getProps() {
-  const result = await fetch("http://127.0.0.1:3000/api/entries")
+  const result = await fetch(
+    process.env.NODE_ENV === "development"
+      ? "http://127.0.0.1:8000/api/entries"
+      : "http://127.0.0.1:8000/api/entries",
+  )
 
   return result.json()
 }

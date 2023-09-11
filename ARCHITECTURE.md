@@ -4,7 +4,7 @@ This app was designed with the purpose to be the generic tax calculator applicat
 
 # Frontend Architecture
 
-- Entry Point: `app/layout.tsx`
+- Entry Point: `app/page.tsx`
 - Components: `components/*`
 - Utilities: `lib/*`.\
   To separate generic utility functions

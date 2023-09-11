@@ -42,6 +42,9 @@ npx create-next-app nextjs-fastapi --example "https://github.com/digitros/nextjs
 
 ## Getting Started
 
+- `pnpm`: `^8.7.4`
+- `python`: `^3.8.10`
+
 First, install the dependencies:
 
 ```bash

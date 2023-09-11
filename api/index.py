@@ -18,10 +18,11 @@ async def get_entries_input_props():
 
 @app.post("/api/entries")
 async def post_entries(payload: Request):
-    data = payload.json()
+    _data = payload.json()
     entries_service = EntriesService(dummy_db)
+    data = await _data
 
-    res = entries_service.calculate(PostEntriesInputDTO(** await data), rule_id=1)
+    res = entries_service.calculate(PostEntriesInputDTO(**data), rule_id=1)
 
     payload = PostEntriesOutputDTO(**res)
     return payload
